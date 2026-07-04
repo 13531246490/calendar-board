@@ -20,7 +20,7 @@ export async function uploadImage(req, res, next) {
       .upload(filePath, file.buffer, { contentType: file.mimetype, upsert: false });
     if (error) {
       console.error('[Supabase] 上传失败:', error.message);
-      return res.status(500).json({ code: 500, message: '图片上传失败: ' + error.message, data: null });
+      return res.status(500).json({ code: 500, message: '图片上传失败: ' + error.message, data: { bucket: BUCKET, hasUrl: !!process.env.SUPABASE_URL } });
     }
     const { data: urlData } = supabase.storage
       .from(BUCKET)
